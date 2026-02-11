@@ -17,6 +17,8 @@ public class SongManager : MonoBehaviour
     public float noteTime;
     public float noteSpawnY;//where note instantiates
     public float noteTapY;//where it should be tapped
+
+    public double ErrorMargin;//Secs
     public float noteDespawnY
     {
         get 
@@ -70,7 +72,22 @@ public class SongManager : MonoBehaviour
 
     public void GetDataFromMidi()
     { 
-        
+        var notes = midiFile.GetNotes();
+        var array = new Melanchall.DryWetMidi.Interaction.Note[notes.Count];
+        notes.CopyTo(array, 0);
+
+        //TODP further manipulation
+        Invoke(nameof(StartSong), songDelayinSecs);
+    }
+
+    public void StartSong() 
+    { 
+        audioSource.Play();
+    }
+
+    public static double GetAudioSourceTime() 
+    {
+        return Instance.audioSource.timeSamples / Instance.audioSource.clip.frequency;
     }
 
     // Update is called once per frame
