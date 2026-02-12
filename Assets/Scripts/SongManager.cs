@@ -49,7 +49,8 @@ public class SongManager : MonoBehaviour
 
     private void ReadFromFile()
     {
-        MidiFile.Read(Application.streamingAssetsPath+"/"+fileLocation);
+        midiFile = MidiFile.Read(Application.streamingAssetsPath+"/"+fileLocation);
+        Debug.Log(Application.streamingAssetsPath + "/" + fileLocation);
         GetDataFromMidi();
     }
 
@@ -92,7 +93,7 @@ public class SongManager : MonoBehaviour
 
     public static double GetAudioSourceTime() 
     {
-        return Instance.audioSource.timeSamples / Instance.audioSource.clip.frequency;
+        return (double) Instance.audioSource.timeSamples / Instance.audioSource.clip.frequency;
     }
 
     // Update is called once per frame

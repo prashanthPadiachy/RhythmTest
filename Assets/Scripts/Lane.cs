@@ -10,7 +10,7 @@ public class Lane : MonoBehaviour
     public KeyCode input;
     public GameObject notePrefab;
     List<Note> notes = new List<Note>();
-    public List<double> timeStamps;//timestamps where player needs to press THIS input
+    public List<double> timeStamps = new List<double>();//timestamps where player needs to press THIS input
 
     int spawnIndex = 0;//keeps track of what timestamp needs to be spawned or detected 
     int inputIndex = 0;
@@ -38,6 +38,7 @@ public class Lane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SongManager.Instance == null) return;
         //Handle Spawning Notes
         if (spawnIndex < timeStamps.Count) 
         {
@@ -45,7 +46,7 @@ public class Lane : MonoBehaviour
             {
                 var note = Instantiate(notePrefab, transform); //instantiates the note and adds it to the list
                 notes.Add(note.GetComponent<Note>());
-                note.GetComponent<Note>().assignedTime = (float) timeStamps[spawnIndex];//set vars assigned time so node knows how to position itself
+                note.GetComponent<Note>().assignedTime = (float)timeStamps[spawnIndex];//set vars assigned time so node knows how to position itself
                 spawnIndex++;
             }
         }
@@ -56,7 +57,7 @@ public class Lane : MonoBehaviour
             //accessing stuff
             double timeStamp = timeStamps[inputIndex];
             double errorMargin = SongManager.Instance.ErrorMargin;
-            double audioTime = SongManager.GetAudioSourceTime() - (SongManager.Instance.inputDeleyinMs /1000);
+            double audioTime = SongManager.GetAudioSourceTime() - (SongManager.Instance.inputDeleyinMs /1000.0);
 
             if (Input.GetKeyDown(input)) 
             {
