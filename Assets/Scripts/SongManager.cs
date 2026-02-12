@@ -28,6 +28,10 @@ public class SongManager : MonoBehaviour
     }
 
     public static MidiFile midiFile;
+
+    public Lane[] lanes;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -76,7 +80,8 @@ public class SongManager : MonoBehaviour
         var array = new Melanchall.DryWetMidi.Interaction.Note[notes.Count];
         notes.CopyTo(array, 0);
 
-        //TODP further manipulation
+        foreach (var lane in lanes) lane.SetTimeStamps(array);
+
         Invoke(nameof(StartSong), songDelayinSecs);
     }
 

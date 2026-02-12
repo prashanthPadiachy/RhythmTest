@@ -84,11 +84,11 @@ public class Lane : MonoBehaviour
 
     private void Miss()
     {
-
+        ScoreManager.miss();
     }
 
     private void Hit()
     {
-
+        ScoreManager.hit();
     }
 }
